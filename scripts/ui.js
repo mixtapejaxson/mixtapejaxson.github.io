@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function generateFooter() {
         const pathDepth = currentPagePath.split('/').length - 2;
         const basePath = '../'.repeat(pathDepth > 0 ? pathDepth : 0);
-        const licensePath = `${basePath}LICENSE`;
+        const licensePath = `https://github.com/mixtapejaxson/mixtapejaxson.github.io`;
 
         footer.innerHTML = `&copy; 2025 MixtapeJaxson. <a href="${licensePath}" target="_blank">MIT</a> License.`;
     }
