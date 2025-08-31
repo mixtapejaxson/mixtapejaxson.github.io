@@ -32,3 +32,51 @@
 .hero p {
     font-size: 1.2rem;
 }
+
+@media (max-width: 600px) {
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn {
+        width: 80%; /* Make buttons take up more width on small screens */
+    }
+}
+
+.hero-buttons {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background-color: #9b59b6;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease, transform 0.5s ease, opacity 0.5s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #8e44ad;
+    transform: translateY(-3px);
+}
+
+/* Fly-in animation */
+.fly-in-btn {
+    opacity: 0;
+    transform: translateY(20px); /* Start slightly below */
+}
+
+.fly-in-btn.show {
+    opacity: 1;
+    transform: translateY(0);
+}
