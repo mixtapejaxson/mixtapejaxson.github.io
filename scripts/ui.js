@@ -2,6 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const navMenu = document.querySelector('.nav-menu');
     const currentPagePath = window.location.pathname;
 
+    // Fly-in animation for buttons
+    const flyInButtons = document.querySelectorAll('.fly-in-btn');
+    flyInButtons.forEach((button, index) => {
+        setTimeout(() => {
+            button.classList.add('show');
+        }, 100 * index); // Stagger the animation
+    });
+
     const navLinks = [
         { text: 'Home', href: 'index.html' },
         { text: 'Projects', href: 'projects/index.html' },
