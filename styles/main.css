@@ -142,7 +142,8 @@ body {
     text-align: center;
     padding: 1rem;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease; 
 }
 
 .footer a {
