@@ -14,7 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
         { text: 'Home', href: 'index.html' },
         { text: 'Projects', href: 'projects/index.html' },
         { text: 'Socials', href: 'socials/index.html' },
-        { text: 'About', href: 'about/index.html' }
+        { text: 'About', href: 'about/index.html' },
+        { text: 'Blog', href: 'https://blog.mixtapejaxson.com' }
     ];
 
     function generateNavLinks() {
