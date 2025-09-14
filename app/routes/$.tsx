@@ -1,7 +1,8 @@
 import type { Route } from "./+types/$";
 import { Link } from "react-router";
 import { useState, useEffect } from "react";
-
+import { Analytics } from "@vercel/analytics/react";
+<Analytics/>
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "404 - Page Not Found | MixtapeJaxson" },
