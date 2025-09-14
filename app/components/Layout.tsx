@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 import Navigation from "./Navigation";
 import Footer from "./Footer";
-
+import { Analytics } from "@vercel/analytics/react";
+<Analytics/>
 interface LayoutProps {
   children: ReactNode;
 }
