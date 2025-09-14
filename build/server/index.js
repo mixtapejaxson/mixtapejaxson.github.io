@@ -5,6 +5,7 @@ import { ServerRouter, useLocation, Link, UNSAFE_withComponentProps, Outlet, UNS
 import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
 import { useState, useEffect } from "react";
+import "@vercel/analytics/react";
 const streamTimeout = 5e3;
 function handleRequest(request, responseStatusCode, responseHeaders, routerContext, loadContext) {
   return new Promise((resolve, reject) => {
@@ -173,6 +174,20 @@ function Footer() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  const socialLinks2 = [
+    { name: "GitHub", url: "https://github.com/mixtapejaxson", icon: "🐙" },
+    { name: "Twitter", url: "https://twitter.com/@mixtapejaxson", icon: "🐦" },
+    {
+      name: "Instagram",
+      url: "https://instagram.com/@jaxsonisdagoat",
+      icon: "📸"
+    },
+    {
+      name: "Snapchat",
+      url: "https://www.snapchat.com/add/jdubz2027?share_id=VVLpcSaJwu8&locale=en-US",
+      icon: "👻"
+    }
+  ];
   return /* @__PURE__ */ jsxs(
     "footer",
     {
@@ -239,41 +254,18 @@ function Footer() {
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
               /* @__PURE__ */ jsx("h4", { className: "text-lg font-semibold text-white", children: "Connect With Me" }),
-              /* @__PURE__ */ jsxs("div", { className: "flex space-x-4", children: [
-                /* @__PURE__ */ jsx(
-                  "a",
-                  {
-                    href: "https://github.com/mixtapejaxson",
-                    target: "_blank",
-                    rel: "noopener noreferrer",
-                    className: "w-10 h-10 bg-gray-800 hover:bg-purple-600 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:rotate-12",
-                    title: "GitHub",
-                    children: /* @__PURE__ */ jsx("span", { className: "text-lg", children: "🐙" })
-                  }
-                ),
-                /* @__PURE__ */ jsx(
-                  "a",
-                  {
-                    href: "https://twitter.com/@mixtapejaxson",
-                    target: "_blank",
-                    rel: "noopener noreferrer",
-                    className: "w-10 h-10 bg-gray-800 hover:bg-purple-600 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:rotate-12",
-                    title: "Twitter",
-                    children: /* @__PURE__ */ jsx("span", { className: "text-lg", children: "🐦" })
-                  }
-                ),
-                /* @__PURE__ */ jsx(
-                  "a",
-                  {
-                    href: "https://instagram.com/@jaxsonisdagoat",
-                    target: "_blank",
-                    rel: "noopener noreferrer",
-                    className: "w-10 h-10 bg-gray-800 hover:bg-purple-600 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:rotate-12",
-                    title: "Instagram",
-                    children: /* @__PURE__ */ jsx("span", { className: "text-lg", children: "📸" })
-                  }
-                )
-              ] })
+              /* @__PURE__ */ jsx("div", { className: "flex space-x-4", children: socialLinks2.map((social) => /* @__PURE__ */ jsx(
+                "a",
+                {
+                  href: social.url,
+                  target: "_blank",
+                  rel: "noopener noreferrer",
+                  className: "w-10 h-10 bg-gray-800 hover:bg-purple-600 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:rotate-12",
+                  title: social.name,
+                  children: /* @__PURE__ */ jsx("span", { className: "text-lg", children: social.icon })
+                },
+                social.name
+              )) })
             ] })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "mt-8 pt-8 border-t border-purple-500/20 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0", children: [
@@ -1102,7 +1094,7 @@ function meta$1({}) {
     title: "MixtapeJaxson - About Me"
   }, {
     name: "description",
-    content: "Learn about MixtapeJaxson's journey in web development, skills, experiences, and what drives me to create amazing digital experiences."
+    content: "Learn about MixtapeJaxson, a 16-year-old high school developer passionate about open source software, self-directed learning, and creating amazing digital experiences with FOSS tools."
   }, {
     property: "og:title",
     content: "MixtapeJaxson - About Me"
@@ -1180,27 +1172,26 @@ const skills = [{
   category: "design"
 }];
 const experiences = [{
-  title: "Full Stack Developer",
-  company: "Tech Innovations Inc.",
+  title: "Open Source Contributor",
+  company: "Various Projects",
   period: "2023 - Present",
-  description: "Leading frontend development for multiple client projects, implementing modern React applications with TypeScript and creating responsive, accessible user interfaces.",
-  achievements: ["Improved application performance by 40%", "Led a team of 3 junior developers", "Implemented automated testing reducing bugs by 60%"]
+  description: "Contributing to open source projects on GitHub, learning from the community and giving back. Working on personal projects using primarily FOSS tools and libraries.",
+  achievements: ["Contributed to 10+ open source projects", "Built projects using fully open source stack", "Active in developer communities and forums"]
 }, {
-  title: "Frontend Developer",
-  company: "Digital Solutions LLC",
-  period: "2022 - 2023",
-  description: "Developed and maintained web applications using React, Vue.js, and modern CSS frameworks. Collaborated with designers and backend developers to deliver pixel-perfect user experiences.",
-  achievements: ["Built 15+ responsive web applications", "Reduced page load times by 35%", "Mentored 2 interns in modern web development"]
+  title: "Self-Taught Developer",
+  company: "Personal Projects",
+  period: "2022 - Present",
+  description: "Started my coding journey in high school, learning through online resources, documentation, and hands-on practice. Built various web applications and tools using open source technologies.",
+  achievements: ["Built 15+ personal projects", "Mastered React, Node.js, and Linux", "Created full-stack applications from scratch"]
 }, {
-  title: "Junior Web Developer",
-  company: "StartUp Central",
-  period: "2021 - 2022",
-  description: "Started my professional journey building websites with HTML, CSS, and JavaScript. Quickly adapted to modern frameworks and contributed to various client projects.",
-  achievements: ["Completed 20+ client projects", "Learned React, Node.js, and modern tooling", "Received 'Rising Star' award"]
+  title: "High School Student",
+  company: "Local High School",
+  period: "2021 - Present",
+  description: "Balancing academic studies with my passion for programming. Taking computer science courses while building real-world projects in my spare time.",
+  achievements: ["Maintaining excellent grades while coding", "Leading school's programming club", "Teaching peers about open source software"]
 }];
 const about = UNSAFE_withComponentProps(function About() {
   const [visibleSections, setVisibleSections] = useState([]);
-  const [activeTab, setActiveTab] = useState("story");
   const [skillFilter, setSkillFilter] = useState("all");
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -1273,34 +1264,17 @@ const about = UNSAFE_withComponentProps(function About() {
           children: "👨‍💻"
         }), /* @__PURE__ */ jsx("p", {
           className: "text-xl text-gray-300 max-w-3xl mx-auto",
-          children: "Passionate developer, creative problem solver, and lifelong learner. Here's my story and what drives me to create amazing digital experiences."
+          children: "16-year-old high school student, passionate open source developer, and self-directed learner. Here's my story and what drives me to create amazing digital experiences with FOSS tools."
         })]
-      }), /* @__PURE__ */ jsx("div", {
-        className: "flex flex-col sm:flex-row justify-center mb-12 bg-gray-800/50 backdrop-blur-sm rounded-2xl p-2 max-w-2xl mx-auto",
-        children: [{
-          id: "story",
-          name: "My Story",
-          icon: "📖"
-        }, {
-          id: "skills",
-          name: "Skills",
-          icon: "🛠️"
-        }, {
-          id: "experience",
-          name: "Experience",
-          icon: "💼"
-        }].map((tab) => /* @__PURE__ */ jsxs("button", {
-          onClick: () => setActiveTab(tab.id),
-          className: `flex-1 flex items-center justify-center space-x-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${activeTab === tab.id ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg" : "text-gray-300 hover:text-white hover:bg-gray-700/50"}`,
-          children: [/* @__PURE__ */ jsx("span", {
-            children: tab.icon
-          }), /* @__PURE__ */ jsx("span", {
-            children: tab.name
-          })]
-        }, tab.id))
       }), /* @__PURE__ */ jsxs("div", {
-        className: "min-h-[600px]",
-        children: [activeTab === "story" && /* @__PURE__ */ jsx("div", {
+        className: "mb-16",
+        children: [/* @__PURE__ */ jsx("h2", {
+          className: "text-3xl font-bold text-center mb-12",
+          children: /* @__PURE__ */ jsx("span", {
+            className: "text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400",
+            children: "📖 My Story"
+          })
+        }), /* @__PURE__ */ jsx("div", {
           "data-section": "story",
           className: `observe-section transition-all duration-1000 ${visibleSections.includes("story") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`,
           children: /* @__PURE__ */ jsxs("div", {
@@ -1318,13 +1292,13 @@ const about = UNSAFE_withComponentProps(function About() {
                   })]
                 }), /* @__PURE__ */ jsx("p", {
                   className: "text-gray-300 leading-relaxed mb-4",
-                  children: "Hi there! I'm MixtapeJaxson, a passionate full-stack developer who fell in love with coding during college. What started as a curiosity about how websites work has evolved into a deep passion for creating digital experiences that make a difference."
+                  children: "Hi there! I'm MixtapeJaxson, a 16-year-old high school student and passionate full-stack developer who fell in love with coding at a young age. What started as curiosity about how websites work has evolved into a deep passion for creating digital experiences that make a difference."
                 }), /* @__PURE__ */ jsx("p", {
                   className: "text-gray-300 leading-relaxed mb-4",
-                  children: "I believe in writing clean, maintainable code and staying up-to-date with the latest technologies. My journey has taken me from basic HTML and CSS to complex React applications, and I'm always excited to learn something new."
+                  children: "I'm a huge advocate for open source software and use a mostly open source stack in all my projects. From Linux as my daily driver to tools like React, Node.js, and PostgreSQL, I believe in the power of collaborative development and giving back to the community that has taught me so much."
                 }), /* @__PURE__ */ jsx("p", {
                   className: "text-gray-300 leading-relaxed",
-                  children: `When I'm not coding, you'll find me exploring new music (hence the "Mixtape" in my name!), gaming, or working on creative side projects. I love the intersection of technology and creativity, and I'm always looking for ways to combine both in my work.`
+                  children: `When I'm not coding or studying, you'll find me exploring new music (hence the "Mixtape" in my name!), gaming on my Linux setup, or contributing to open source projects. I love the intersection of technology and creativity, and I'm always looking for ways to combine both in my work.`
                 })]
               }), /* @__PURE__ */ jsxs("div", {
                 className: "grid grid-cols-2 gap-4",
@@ -1335,7 +1309,7 @@ const about = UNSAFE_withComponentProps(function About() {
                     children: "🎯"
                   }), /* @__PURE__ */ jsx("div", {
                     className: "text-2xl font-bold text-white",
-                    children: "50+"
+                    children: ">50"
                   }), /* @__PURE__ */ jsx("div", {
                     className: "text-sm text-gray-300",
                     children: "Projects Completed"
@@ -1350,7 +1324,7 @@ const about = UNSAFE_withComponentProps(function About() {
                     children: "3+"
                   }), /* @__PURE__ */ jsx("div", {
                     className: "text-sm text-gray-300",
-                    children: "Years Experience"
+                    children: "Years Learning"
                   })]
                 })]
               })]
@@ -1375,10 +1349,10 @@ const about = UNSAFE_withComponentProps(function About() {
                     }), /* @__PURE__ */ jsxs("div", {
                       children: [/* @__PURE__ */ jsx("h4", {
                         className: "font-semibold text-white mb-1",
-                        children: "Creative Problem Solving"
+                        children: "Open Source Passion"
                       }), /* @__PURE__ */ jsx("p", {
                         className: "text-gray-300 text-sm",
-                        children: "I love finding elegant solutions to complex challenges"
+                        children: "Contributing to FOSS projects and using open source tools"
                       })]
                     })]
                   }), /* @__PURE__ */ jsxs("div", {
@@ -1389,10 +1363,10 @@ const about = UNSAFE_withComponentProps(function About() {
                     }), /* @__PURE__ */ jsxs("div", {
                       children: [/* @__PURE__ */ jsx("h4", {
                         className: "font-semibold text-white mb-1",
-                        children: "Continuous Learning"
+                        children: "Self-Directed Learning"
                       }), /* @__PURE__ */ jsx("p", {
                         className: "text-gray-300 text-sm",
-                        children: "Technology evolves fast, and I evolve with it"
+                        children: "Learning through docs, communities, and hands-on practice"
                       })]
                     })]
                   }), /* @__PURE__ */ jsxs("div", {
@@ -1403,10 +1377,10 @@ const about = UNSAFE_withComponentProps(function About() {
                     }), /* @__PURE__ */ jsxs("div", {
                       children: [/* @__PURE__ */ jsx("h4", {
                         className: "font-semibold text-white mb-1",
-                        children: "Collaboration"
+                        children: "Community Driven"
                       }), /* @__PURE__ */ jsx("p", {
                         className: "text-gray-300 text-sm",
-                        children: "Great things happen when creative minds work together"
+                        children: "Believing in collaborative development and knowledge sharing"
                       })]
                     })]
                   }), /* @__PURE__ */ jsxs("div", {
@@ -1417,10 +1391,10 @@ const about = UNSAFE_withComponentProps(function About() {
                     }), /* @__PURE__ */ jsxs("div", {
                       children: [/* @__PURE__ */ jsx("h4", {
                         className: "font-semibold text-white mb-1",
-                        children: "User Experience"
+                        children: "Creative Problem Solving"
                       }), /* @__PURE__ */ jsx("p", {
                         className: "text-gray-300 text-sm",
-                        children: "Making technology accessible and enjoyable for everyone"
+                        children: "Finding elegant solutions using open source tools"
                       })]
                     })]
                   })]
@@ -1437,21 +1411,30 @@ const about = UNSAFE_withComponentProps(function About() {
                 }), /* @__PURE__ */ jsxs("div", {
                   className: "space-y-2 text-gray-300",
                   children: [/* @__PURE__ */ jsx("p", {
+                    children: "🐧 Linux user and advocate"
+                  }), /* @__PURE__ */ jsx("p", {
                     children: "🎧 I code best with lo-fi hip-hop playing"
                   }), /* @__PURE__ */ jsx("p", {
-                    children: "☕ Coffee enthusiast (3+ cups daily)"
+                    children: "🎮 Gaming on my Linux setup"
                   }), /* @__PURE__ */ jsx("p", {
-                    children: "🎮 Enjoy gaming in my free time"
+                    children: "📚 Currently learning Rust and contributing to FOSS"
                   }), /* @__PURE__ */ jsx("p", {
-                    children: "📚 Currently reading about AI and machine learning"
-                  }), /* @__PURE__ */ jsx("p", {
-                    children: "🌮 Taco Tuesday is sacred"
+                    children: "🌮 High schooler who still loves Taco Tuesday"
                   })]
                 })]
               })]
             })]
           })
-        }), activeTab === "skills" && /* @__PURE__ */ jsxs("div", {
+        })]
+      }), /* @__PURE__ */ jsxs("div", {
+        className: "mb-16",
+        children: [/* @__PURE__ */ jsx("h2", {
+          className: "text-3xl font-bold text-center mb-12",
+          children: /* @__PURE__ */ jsx("span", {
+            className: "text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400",
+            children: "🛠️ Skills"
+          })
+        }), /* @__PURE__ */ jsxs("div", {
           "data-section": "skills",
           className: `observe-section transition-all duration-1000 ${visibleSections.includes("skills") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`,
           children: [/* @__PURE__ */ jsx("div", {
@@ -1504,7 +1487,16 @@ const about = UNSAFE_withComponentProps(function About() {
               })]
             }, skill.name))
           })]
-        }), activeTab === "experience" && /* @__PURE__ */ jsx("div", {
+        })]
+      }), /* @__PURE__ */ jsxs("div", {
+        className: "mb-16",
+        children: [/* @__PURE__ */ jsx("h2", {
+          className: "text-3xl font-bold text-center mb-12",
+          children: /* @__PURE__ */ jsx("span", {
+            className: "text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400",
+            children: "💼 Experience"
+          })
+        }), /* @__PURE__ */ jsx("div", {
           "data-section": "experience",
           className: `observe-section transition-all duration-1000 ${visibleSections.includes("experience") ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`,
           children: /* @__PURE__ */ jsx("div", {
@@ -1569,7 +1561,7 @@ const about = UNSAFE_withComponentProps(function About() {
             children: "Let's Work Together!"
           }), /* @__PURE__ */ jsx("p", {
             className: "text-gray-300 mb-6",
-            children: "I'm always interested in new opportunities and exciting projects. Whether you have a project in mind or just want to connect, I'd love to hear from you!"
+            children: "I'm always excited to collaborate on open source projects and learn from the developer community. Whether you have a cool project idea or just want to connect, I'd love to hear from you!"
           }), /* @__PURE__ */ jsxs("div", {
             className: "flex flex-col sm:flex-row gap-4 justify-center",
             children: [/* @__PURE__ */ jsxs("a", {
@@ -1787,7 +1779,7 @@ const route5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   default: $,
   meta
 }, Symbol.toStringTag, { value: "Module" }));
-const serverManifest = { "entry": { "module": "/assets/entry.client-9t7juqhG.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": true, "module": "/assets/root-_a4GIG02.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": ["/assets/root-CEflACdT.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/home": { "id": "routes/home", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/home-BQtMN0y0.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/projects": { "id": "routes/projects", "parentId": "root", "path": "projects", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/projects-DtXT2C1S.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/socials": { "id": "routes/socials", "parentId": "root", "path": "socials", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/socials-CY5l5G7q.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/about": { "id": "routes/about", "parentId": "root", "path": "about", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/about-BIAhNIYA.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/$": { "id": "routes/$", "parentId": "root", "path": "*", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/_-CvcUBA8k.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-b88d8941.js", "version": "b88d8941", "sri": void 0 };
+const serverManifest = { "entry": { "module": "/assets/entry.client-9t7juqhG.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": true, "module": "/assets/root-rFMA0g-J.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": ["/assets/root-DfUA3JNO.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/home": { "id": "routes/home", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/home-BQtMN0y0.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/projects": { "id": "routes/projects", "parentId": "root", "path": "projects", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/projects-DtXT2C1S.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/socials": { "id": "routes/socials", "parentId": "root", "path": "socials", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/socials-CY5l5G7q.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/about": { "id": "routes/about", "parentId": "root", "path": "about", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/about-BeKjW6O_.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/$": { "id": "routes/$", "parentId": "root", "path": "*", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/_-CvcUBA8k.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-fb6054be.js", "version": "fb6054be", "sri": void 0 };
 const assetsBuildDirectory = "build/client";
 const basename = "/";
 const future = { "v8_middleware": false, "unstable_optimizeDeps": false, "unstable_splitRouteModules": false, "unstable_subResourceIntegrity": false, "unstable_viteEnvironmentApi": false };
