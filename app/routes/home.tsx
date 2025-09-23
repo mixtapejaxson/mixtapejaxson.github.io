@@ -1,7 +1,6 @@
 import type { Route } from "./+types/home";
 import HeroSection from "../components/HeroSection";
-import { Analytics } from "@vercel/analytics/react";
-<Analytics/>
+
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "MixtapeJaxson - Welcome" },
