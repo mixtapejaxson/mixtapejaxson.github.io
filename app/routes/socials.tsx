@@ -1,7 +1,6 @@
 import type { Route } from "./+types/socials";
 import { useState, useEffect } from "react";
-import { Analytics } from "@vercel/analytics/react";
-<Analytics/>
+
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "MixtapeJaxson - Connect With Me" },
