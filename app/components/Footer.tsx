@@ -24,12 +24,12 @@ export default function Footer() {
     { name: "Twitter", url: "https://twitter.com/@mixtapejaxson", icon: "🐦" },
     {
       name: "Instagram",
-      url: "https://instagram.com/@jaxsonisdagoat",
+      url: "https://instagram.com/jaxsonisdagoat",
       icon: "📸",
     },
     {
       name: "Snapchat",
-      url: "https://www.snapchat.com/add/jdubz2027?share_id=VVLpcSaJwu8&locale=en-US",
+      url: "https://www.snapchat.com/@mixtapejaxson",
       icon: "👻",
     },
   ];

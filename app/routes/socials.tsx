@@ -30,18 +30,18 @@ const socialLinks: SocialLink[] = [
     id: 1,
     name: "Instagram",
     username: "@jaxsonisdagoat",
-    url: "https://instagram.com/@jaxsonisdagoat",
+    url: "https://instagram.com/jaxsonisdagoat",
     icon: "📸",
     color: "from-pink-500 to-purple-600",
     hoverColor: "from-pink-400 to-purple-500",
     description: "Follow my daily adventures and behind the scenes content",
-    followers: "1.2K+ followers",
+    followers:  " >500 followers",
   },
   {
     id: 2,
     name: "Snapchat",
-    username: "@jdubz2027",
-    url: "https://www.snapchat.com/add/jdubz2027?share_id=VVLpcSaJwu8&locale=en-US",
+    username: "@mixtapejaxson",
+    url: "https://www.snapchat.com/@mixtapejaxson",
     icon: "👻",
     color: "from-yellow-400 to-yellow-600",
     hoverColor: "from-yellow-300 to-yellow-500",
@@ -57,7 +57,7 @@ const socialLinks: SocialLink[] = [
     color: "from-gray-700 to-gray-900",
     hoverColor: "from-gray-600 to-gray-800",
     description: "Check out my code repositories and open source contributions",
-    followers: "150+ followers",
+    followers: ">150 followers",
   },
   {
     id: 4,
@@ -69,7 +69,7 @@ const socialLinks: SocialLink[] = [
     hoverColor: "from-blue-400 to-blue-600",
     description:
       "Follow me for tech thoughts, project updates, and random musings",
-    followers: "500+ followers",
+    followers: "200+ followers",
   },
 ];
 
