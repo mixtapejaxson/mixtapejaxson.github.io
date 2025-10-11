@@ -7,7 +7,7 @@ export function meta({}: Route.MetaArgs) {
     {
       name: "description",
       content:
-        "Learn about MixtapeJaxson, a 16-year-old high school developer passionate about open source software, self-directed learning, and creating amazing digital experiences with FOSS tools.",
+        "Learn about MixtapeJaxson, a 17-year-old high school developer passionate about open source software, self-directed learning, and creating amazing digital experiences with FOSS tools.",
     },
     { property: "og:title", content: "MixtapeJaxson - About Me" },
   ];
