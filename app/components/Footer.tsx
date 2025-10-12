@@ -126,7 +126,7 @@ export default function Footer() {
             <p>
               &copy; 2025 MixtapeJaxson. All rights reserved. |{" "}
               <a
-                href="https://github.com/mixtapejaxson"
+                href="https://github.com/mixtapejaxson/mixtapejaxson.github.io/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-purple-400 hover:text-purple-300 transition-colors duration-300"
