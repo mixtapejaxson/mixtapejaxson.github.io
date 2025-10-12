@@ -1,13 +1,30 @@
 import type { Route } from "./+types/about";
 import { useState, useEffect } from "react";
 
+// Calculate age dynamically based on birthdate (October 8, 2008)
+function calculateAge(birthdate: Date): number {
+  const today = new Date();
+  let age = today.getFullYear() - birthdate.getFullYear();
+  const monthDiff = today.getMonth() - birthdate.getMonth();
+  
+  // If birthday hasn't occurred this year yet, subtract 1
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdate.getDate())) {
+    age--;
+  }
+  
+  return age;
+}
+
+const BIRTHDATE = new Date(2008, 9, 8); // October 8, 2008 (month is 0-indexed)
+const currentAge = calculateAge(BIRTHDATE);
+
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "MixtapeJaxson - About Me" },
     {
       name: "description",
       content:
-        "Learn about MixtapeJaxson, a 17-year-old high school developer passionate about open source software, self-directed learning, and creating amazing digital experiences with FOSS tools.",
+        `Learn about MixtapeJaxson, a ${currentAge}-year-old high school developer passionate about open source software, self-directed learning, and creating amazing digital experiences with FOSS tools.`,
     },
     { property: "og:title", content: "MixtapeJaxson - About Me" },
   ];
@@ -142,7 +159,7 @@ export default function About() {
           </h1>
           <div className="text-6xl sm:text-8xl mb-6 animate-wave">👨‍💻</div>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            16-year-old high school student, passionate open source developer,
+            {currentAge}-year-old high school student, passionate open source developer,
             and self-directed learner. Here's my story and what drives me to
             create amazing digital experiences with FOSS tools.
           </p>
@@ -171,7 +188,7 @@ export default function About() {
                     <span>My Journey</span>
                   </h3>
                   <p className="text-gray-300 leading-relaxed mb-4">
-                    Hi there! I'm MixtapeJaxson, a 16-year-old high school
+                    Hi there! I'm MixtapeJaxson, a {currentAge}-year-old high school
                     student and passionate full-stack developer who fell in love
                     with coding at a young age. What started as curiosity about
                     how websites work has evolved into a deep passion for
