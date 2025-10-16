@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 import Navigation from "./Navigation";
 import Footer from "./Footer";
 interface LayoutProps {
@@ -6,9 +8,6 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
-  import { useState, useEffect } from "react";
-  import Cookies from "js-cookie";
-
   const bannerText = process.env.BANNER_TEXT;
   const bannerBgColor = process.env.BANNER_BG_COLOR || "bg-blue-500";
   const bannerTextColor = process.env.BANNER_TEXT_COLOR || "text-white";
