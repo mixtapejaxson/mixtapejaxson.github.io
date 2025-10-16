@@ -1,22 +1,52 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router";
+import { getCookie, setCookie } from "../utils/cookie";
 
 export default function HeroSection() {
   const [typedText, setTypedText] = useState("");
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [visited, setVisited] = useState<boolean | null>(null);
+  const welcomeBackShown = useRef(false);
 
-  const phrases = [
+  // Determine phrases based on visit
+  const basePhrases = [
     "Welcome to my website!",
     "I create amazing projects!",
     "Let's build something together!",
     "Explore my digital world!",
   ];
 
+  // If visited, always show "Welcome Back!" as the first phrase, then cycle through the rest
+  const phrases =
+    visited === true
+      ? ["Welcome Back!", ...basePhrases.filter((p) => p !== "Welcome Back!")]
+      : basePhrases;
+
+  // On mount, check/set visited cookie
+  useEffect(() => {
+    const cookie = getCookie("visited");
+    if (cookie === "true") {
+      setVisited(true);
+    } else {
+      setVisited(false);
+      setCookie("visited", "true", { days: 365 });
+    }
+  }, []);
+
   // Typing animation effect
   useEffect(() => {
-    const currentPhrase = phrases[currentPhraseIndex];
+    if (visited === null) return; // Wait for cookie check
+
+    // Always show "Welcome Back!" as the first phrase if visited
+    let phraseIdx = currentPhraseIndex;
+    if (visited && !welcomeBackShown.current) {
+      phraseIdx = 0;
+      welcomeBackShown.current = typedText === "Welcome Back!" && !isDeleting;
+    }
+
+    const currentPhrase = phrases[phraseIdx];
     const typingSpeed = isDeleting ? 50 : 150;
 
     const timeout = setTimeout(() => {
@@ -26,7 +56,11 @@ export default function HeroSection() {
       } else if (isDeleting && typedText === "") {
         // Move to next phrase
         setIsDeleting(false);
-        setCurrentPhraseIndex((prev) => (prev + 1) % phrases.length);
+        setCurrentPhraseIndex((prev) => {
+          // If visited, after "Welcome Back!" go to next phrase
+          if (visited && prev === 0) return 1;
+          return (prev + 1) % phrases.length;
+        });
       } else {
         // Type or delete character
         setTypedText(
@@ -38,7 +72,7 @@ export default function HeroSection() {
     }, typingSpeed);
 
     return () => clearTimeout(timeout);
-  }, [typedText, isDeleting, currentPhraseIndex, phrases]);
+  }, [typedText, isDeleting, currentPhraseIndex, phrases, visited]);
 
   // Entrance animation
   useEffect(() => {
