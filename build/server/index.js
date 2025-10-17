@@ -5,7 +5,7 @@ import { ServerRouter, useLocation, Link, UNSAFE_withComponentProps, Outlet, UNS
 import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
 import { Analytics } from "@vercel/analytics/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 const streamTimeout = 5e3;
 function handleRequest(request, responseStatusCode, responseHeaders, routerContext, loadContext) {
   return new Promise((resolve, reject) => {
@@ -179,12 +179,12 @@ function Footer() {
     { name: "Twitter", url: "https://twitter.com/@mixtapejaxson", icon: "🐦" },
     {
       name: "Instagram",
-      url: "https://instagram.com/@jaxsonisdagoat",
+      url: "https://instagram.com/jaxsonisdagoat",
       icon: "📸"
     },
     {
       name: "Snapchat",
-      url: "https://www.snapchat.com/add/jdubz2027?share_id=VVLpcSaJwu8&locale=en-US",
+      url: "https://www.snapchat.com/@mixtapejaxson",
       icon: "👻"
     }
   ];
@@ -275,7 +275,7 @@ function Footer() {
               /* @__PURE__ */ jsx(
                 "a",
                 {
-                  href: "https://github.com/mixtapejaxson",
+                  href: "https://github.com/mixtapejaxson/mixtapejaxson.github.io/",
                   target: "_blank",
                   rel: "noopener noreferrer",
                   className: "text-purple-400 hover:text-purple-300 transition-colors duration-300",
@@ -418,26 +418,81 @@ const route0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   default: root,
   links
 }, Symbol.toStringTag, { value: "Module" }));
+function setCookie(name, value, options) {
+  let cookieStr = `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
+  {
+    const date = /* @__PURE__ */ new Date();
+    date.setTime(date.getTime() + options.days * 24 * 60 * 60 * 1e3);
+    cookieStr += `; expires=${date.toUTCString()}`;
+  }
+  if (options == null ? void 0 : options.path) {
+    cookieStr += `; path=${options.path}`;
+  } else {
+    cookieStr += `; path=/`;
+  }
+  if (options == null ? void 0 : options.domain) {
+    cookieStr += `; domain=${options.domain}`;
+  }
+  if (options == null ? void 0 : options.secure) {
+    cookieStr += `; secure`;
+  }
+  if (options == null ? void 0 : options.sameSite) {
+    cookieStr += `; samesite=${options.sameSite}`;
+  }
+  document.cookie = cookieStr;
+}
+function getCookie(name) {
+  const nameEQ = encodeURIComponent(name) + "=";
+  const ca = document.cookie.split(";");
+  for (let c of ca) {
+    c = c.trim();
+    if (c.indexOf(nameEQ) === 0) {
+      return decodeURIComponent(c.substring(nameEQ.length));
+    }
+  }
+  return null;
+}
 function HeroSection() {
   const [typedText, setTypedText] = useState("");
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const phrases = [
+  const [visited, setVisited] = useState(null);
+  const welcomeBackShown = useRef(false);
+  const basePhrases = [
     "Welcome to my website!",
     "I create amazing projects!",
     "Let's build something together!",
     "Explore my digital world!"
   ];
+  const phrases = visited === true ? ["Welcome Back!", ...basePhrases.filter((p) => p !== "Welcome Back!")] : basePhrases;
   useEffect(() => {
-    const currentPhrase = phrases[currentPhraseIndex];
+    const cookie = getCookie("visited");
+    if (cookie === "true") {
+      setVisited(true);
+    } else {
+      setVisited(false);
+      setCookie("visited", "true", { days: 365 });
+    }
+  }, []);
+  useEffect(() => {
+    if (visited === null) return;
+    let phraseIdx = currentPhraseIndex;
+    if (visited && !welcomeBackShown.current) {
+      phraseIdx = 0;
+      welcomeBackShown.current = typedText === "Welcome Back!" && !isDeleting;
+    }
+    const currentPhrase = phrases[phraseIdx];
     const typingSpeed = isDeleting ? 50 : 150;
     const timeout = setTimeout(() => {
       if (!isDeleting && typedText === currentPhrase) {
         setTimeout(() => setIsDeleting(true), 2e3);
       } else if (isDeleting && typedText === "") {
         setIsDeleting(false);
-        setCurrentPhraseIndex((prev) => (prev + 1) % phrases.length);
+        setCurrentPhraseIndex((prev) => {
+          if (visited && prev === 0) return 1;
+          return (prev + 1) % phrases.length;
+        });
       } else {
         setTypedText(
           isDeleting ? currentPhrase.substring(0, typedText.length - 1) : currentPhrase.substring(0, typedText.length + 1)
@@ -445,7 +500,7 @@ function HeroSection() {
       }
     }, typingSpeed);
     return () => clearTimeout(timeout);
-  }, [typedText, isDeleting, currentPhraseIndex, phrases]);
+  }, [typedText, isDeleting, currentPhraseIndex, phrases, visited]);
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 300);
     return () => clearTimeout(timer);
@@ -819,17 +874,17 @@ const socialLinks = [{
   id: 1,
   name: "Instagram",
   username: "@jaxsonisdagoat",
-  url: "https://instagram.com/@jaxsonisdagoat",
+  url: "https://instagram.com/jaxsonisdagoat",
   icon: "📸",
   color: "from-pink-500 to-purple-600",
   hoverColor: "from-pink-400 to-purple-500",
   description: "Follow my daily adventures and behind the scenes content",
-  followers: "1.2K+ followers"
+  followers: " >500 followers"
 }, {
   id: 2,
   name: "Snapchat",
-  username: "@jdubz2027",
-  url: "https://www.snapchat.com/add/jdubz2027?share_id=VVLpcSaJwu8&locale=en-US",
+  username: "@mixtapejaxson",
+  url: "https://www.snapchat.com/@mixtapejaxson",
   icon: "👻",
   color: "from-yellow-400 to-yellow-600",
   hoverColor: "from-yellow-300 to-yellow-500",
@@ -844,7 +899,7 @@ const socialLinks = [{
   color: "from-gray-700 to-gray-900",
   hoverColor: "from-gray-600 to-gray-800",
   description: "Check out my code repositories and open source contributions",
-  followers: "150+ followers"
+  followers: ">150 followers"
 }, {
   id: 4,
   name: "Twitter",
@@ -854,7 +909,7 @@ const socialLinks = [{
   color: "from-blue-500 to-blue-700",
   hoverColor: "from-blue-400 to-blue-600",
   description: "Follow me for tech thoughts, project updates, and random musings",
-  followers: "500+ followers"
+  followers: "200+ followers"
 }];
 const socials = UNSAFE_withComponentProps(function Socials() {
   const [visibleCards, setVisibleCards] = useState([]);
@@ -1089,12 +1144,23 @@ const route3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   default: socials,
   meta: meta$2
 }, Symbol.toStringTag, { value: "Module" }));
+function calculateAge(birthdate) {
+  const today = /* @__PURE__ */ new Date();
+  let age = today.getFullYear() - birthdate.getFullYear();
+  const monthDiff = today.getMonth() - birthdate.getMonth();
+  if (monthDiff < 0 || monthDiff === 0 && today.getDate() < birthdate.getDate()) {
+    age--;
+  }
+  return age;
+}
+const BIRTHDATE = new Date(2008, 9, 8);
+const currentAge = calculateAge(BIRTHDATE);
 function meta$1({}) {
   return [{
     title: "MixtapeJaxson - About Me"
   }, {
     name: "description",
-    content: "Learn about MixtapeJaxson, a 16-year-old high school developer passionate about open source software, self-directed learning, and creating amazing digital experiences with FOSS tools."
+    content: `Learn about MixtapeJaxson, a ${currentAge}-year-old high school developer passionate about open source software, self-directed learning, and creating amazing digital experiences with FOSS tools.`
   }, {
     property: "og:title",
     content: "MixtapeJaxson - About Me"
@@ -1262,9 +1328,9 @@ const about = UNSAFE_withComponentProps(function About() {
         }), /* @__PURE__ */ jsx("div", {
           className: "text-6xl sm:text-8xl mb-6 animate-wave",
           children: "👨‍💻"
-        }), /* @__PURE__ */ jsx("p", {
+        }), /* @__PURE__ */ jsxs("p", {
           className: "text-xl text-gray-300 max-w-3xl mx-auto",
-          children: "16-year-old high school student, passionate open source developer, and self-directed learner. Here's my story and what drives me to create amazing digital experiences with FOSS tools."
+          children: [currentAge, "-year-old high school student, passionate open source developer, and self-directed learner. Here's my story and what drives me to create amazing digital experiences with FOSS tools."]
         })]
       }), /* @__PURE__ */ jsxs("div", {
         className: "mb-16",
@@ -1290,9 +1356,9 @@ const about = UNSAFE_withComponentProps(function About() {
                   }), /* @__PURE__ */ jsx("span", {
                     children: "My Journey"
                   })]
-                }), /* @__PURE__ */ jsx("p", {
+                }), /* @__PURE__ */ jsxs("p", {
                   className: "text-gray-300 leading-relaxed mb-4",
-                  children: "Hi there! I'm MixtapeJaxson, a 16-year-old high school student and passionate full-stack developer who fell in love with coding at a young age. What started as curiosity about how websites work has evolved into a deep passion for creating digital experiences that make a difference."
+                  children: ["Hi there! I'm MixtapeJaxson, a ", currentAge, "-year-old high school student and passionate full-stack developer who fell in love with coding at a young age. What started as curiosity about how websites work has evolved into a deep passion for creating digital experiences that make a difference."]
                 }), /* @__PURE__ */ jsx("p", {
                   className: "text-gray-300 leading-relaxed mb-4",
                   children: "I'm a huge advocate for open source software and use a mostly open source stack in all my projects. From Linux as my daily driver to tools like React, Node.js, and PostgreSQL, I believe in the power of collaborative development and giving back to the community that has taught me so much."
@@ -1779,7 +1845,7 @@ const route5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   default: $,
   meta
 }, Symbol.toStringTag, { value: "Module" }));
-const serverManifest = { "entry": { "module": "/assets/entry.client-9t7juqhG.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": true, "module": "/assets/root-DJ30I6NQ.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": ["/assets/root-BdwG6box.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/home": { "id": "routes/home", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/home-BQtMN0y0.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/projects": { "id": "routes/projects", "parentId": "root", "path": "projects", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/projects-DtXT2C1S.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/socials": { "id": "routes/socials", "parentId": "root", "path": "socials", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/socials-CY5l5G7q.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/about": { "id": "routes/about", "parentId": "root", "path": "about", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/about-BeKjW6O_.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/$": { "id": "routes/$", "parentId": "root", "path": "*", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/_-CvcUBA8k.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-eee23762.js", "version": "eee23762", "sri": void 0 };
+const serverManifest = { "entry": { "module": "/assets/entry.client-9t7juqhG.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": true, "module": "/assets/root-fQ0lzjzA.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": ["/assets/root-BN_XPSuj.css"], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/home": { "id": "routes/home", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/home-CiLKTV2X.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/projects": { "id": "routes/projects", "parentId": "root", "path": "projects", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/projects-DtXT2C1S.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/socials": { "id": "routes/socials", "parentId": "root", "path": "socials", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/socials-tcCED3QS.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/about": { "id": "routes/about", "parentId": "root", "path": "about", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/about-qbttRjqM.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 }, "routes/$": { "id": "routes/$", "parentId": "root", "path": "*", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasClientMiddleware": false, "hasErrorBoundary": false, "module": "/assets/_-CvcUBA8k.js", "imports": ["/assets/chunk-B7RQU5TL-FvSqzr6z.js"], "css": [], "clientActionModule": void 0, "clientLoaderModule": void 0, "clientMiddlewareModule": void 0, "hydrateFallbackModule": void 0 } }, "url": "/assets/manifest-3b2f28c6.js", "version": "3b2f28c6", "sri": void 0 };
 const assetsBuildDirectory = "build/client";
 const basename = "/";
 const future = { "v8_middleware": false, "unstable_optimizeDeps": false, "unstable_splitRouteModules": false, "unstable_subResourceIntegrity": false, "unstable_viteEnvironmentApi": false };
