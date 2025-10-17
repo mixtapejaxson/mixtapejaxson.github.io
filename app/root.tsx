@@ -72,7 +72,7 @@ export default function App() {
         bannerTextColor={bannerTextColor}
         bannerTextPosition={bannerTextPosition}
       />
-      <div className={hasBanner ? "pt-10" : ""}>
+      <div className={hasBanner ? "mt-10" : ""}>
         <Navigation />
         <main className="pt-16">
           <Outlet />

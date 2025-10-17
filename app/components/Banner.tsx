@@ -52,13 +52,13 @@ export default function Banner({
     <>
       {bannerText && isBannerVisible && (
         <div
-          className={`${bannerBgColor} ${bannerTextColor} ${bannerTextPosition} py-2 px-4 w-full fixed top-0 left-0 right-0 z-50`}
+          className={`${bannerBgColor} ${bannerTextColor} py-2 px-4 w-full fixed top-0 left-0 right-0 z-50`}
         >
-          <div className="flex justify-between items-center max-w-7xl mx-auto">
-            <span>{bannerText}</span>
+          <div className="flex items-center justify-center max-w-7xl mx-auto relative">
+            <span className={bannerTextPosition}>{bannerText}</span>
             <button
               onClick={closeBanner}
-              className="ml-4 text-sm hover:text-gray-200 transition-colors"
+              className="absolute right-0 text-sm hover:text-gray-200 transition-colors"
               aria-label="Close banner"
             >
               ✕
