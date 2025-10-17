@@ -1,5 +1,4 @@
-import type { ReactNode } from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Cookies from "js-cookie";
 
 interface BannerProps {
@@ -15,18 +14,34 @@ export default function Banner({
   bannerTextColor = "text-white",
   bannerTextPosition = "text-center",
 }: BannerProps) {
+  // Memoize the banner key to avoid unnecessary recalculations
+  const bannerKey = useMemo(
+    () =>
+      JSON.stringify({
+        text: bannerText,
+        bgColor: bannerBgColor,
+        textColor: bannerTextColor,
+        position: bannerTextPosition,
+      }),
+    [bannerText, bannerBgColor, bannerTextColor, bannerTextPosition]
+  );
 
-  const bannerKey = `${bannerText}-${bannerBgColor}-${bannerTextColor}-${bannerTextPosition}`;
   const [isBannerVisible, setIsBannerVisible] = useState(true);
 
   useEffect(() => {
+    // Only run if bannerText is provided
+    if (!bannerText) {
+      setIsBannerVisible(false);
+      return;
+    }
+
     const storedBannerKey = Cookies.get("bannerKey");
     if (storedBannerKey === bannerKey) {
       setIsBannerVisible(false);
     } else {
       setIsBannerVisible(true);
     }
-  }, [bannerKey]);
+  }, [bannerKey, bannerText]);
 
   const closeBanner = () => {
     setIsBannerVisible(false);
