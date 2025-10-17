@@ -5,6 +5,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "react-router";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -13,6 +14,16 @@ import "./app.css";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
+import Banner from "./components/Banner";
+
+export const loader = async () => {
+  return {
+    bannerText: process.env.BANNER_TEXT,
+    bannerBgColor: process.env.BANNER_BG_COLOR,
+    bannerTextColor: process.env.BANNER_TEXT_COLOR,
+    bannerTextPosition: process.env.BANNER_TEXT_POSITION,
+  };
+};
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -37,9 +48,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="min-h-screen bg-gray-900 text-white">
-        <Navigation />
-        <main className="pt-16">{children}</main>
-        <Footer />
+        {children}
         <ScrollToTop />
         <Analytics />
         <ScrollRestoration />
@@ -50,7 +59,28 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  const { bannerText, bannerBgColor, bannerTextColor, bannerTextPosition } =
+    useLoaderData<typeof loader>();
+
+  const hasBanner = !!bannerText;
+
+  return (
+    <>
+      <Banner
+        bannerText={bannerText}
+        bannerBgColor={bannerBgColor}
+        bannerTextColor={bannerTextColor}
+        bannerTextPosition={bannerTextPosition}
+      />
+      <div className={hasBanner ? "pt-10" : ""}>
+        <Navigation />
+        <main className="pt-16">
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
+    </>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
