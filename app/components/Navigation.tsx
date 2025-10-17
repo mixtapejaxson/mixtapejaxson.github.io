@@ -13,7 +13,11 @@ const navLinks: NavLink[] = [
   { name: "About", path: "/about" },
 ];
 
-export default function Navigation() {
+interface NavigationProps {
+  hasBanner?: boolean;
+}
+
+export default function Navigation({ hasBanner = false }: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
@@ -37,7 +41,9 @@ export default function Navigation() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
+      className={`fixed left-0 right-0 z-40 transition-all duration-500 ${
+        hasBanner ? "top-10" : "top-0"
+      } ${
         isScrolled
           ? "bg-gray-900/95 backdrop-blur-md shadow-lg border-b border-purple-500/20"
           : "bg-gray-900/80 backdrop-blur-sm"
