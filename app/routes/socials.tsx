@@ -29,8 +29,8 @@ const socialLinks: SocialLink[] = [
   {
     id: 1,
     name: "Instagram",
-    username: "@jaxsonisdagoat",
-    url: "https://instagram.com/jaxsonisdagoat",
+    username: "@jaxson.sh",
+    url: "https://instagram.com/jaxson.sh",
     icon: "📸",
     color: "from-pink-500 to-purple-600",
     hoverColor: "from-pink-400 to-purple-500",
